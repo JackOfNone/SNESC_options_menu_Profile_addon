@@ -1,0 +1,30 @@
+#!/bin/sh
+transfer_default
+mkdir $rootfs/tmp/storage
+if [ -e /dev/sda1 ] || [ -e /dev/mmcblk0p1 ]; then
+  if [ -e /dev/sda1 ]; then
+    mount /dev/sda1 $rootfs/tmp/storage
+  elif [ -e  /dev/mmcblk0p1 ]; then
+    mount /dev/mmcblk0p1 $rootfs/tmp/storage
+  fi
+  mkdir -p $rootfs/tmp/storage/hakchi/profiles/1/saves/
+  mkdir -p $rootfs/tmp/storage/hakchi/profiles/1/retroarch_states/
+  mkdir -p $rootfs/tmp/storage/hakchi/profiles/2/saves/
+  mkdir -p $rootfs/tmp/storage/hakchi/profiles/2/retroarch_states/
+  mkdir -p $rootfs/tmp/storage/hakchi/profiles/3/saves/
+  mkdir -p $rootfs/tmp/storage/hakchi/profiles/3/retroarch_states/
+  cp $rootfs/tmp/storage/hakchi/saves/lang.txt $rootfs/tmp/storage/hakchi/profiles/1/saves/
+  cp $rootfs/tmp/storage/hakchi/saves/lang.txt $rootfs/tmp/storage/hakchi/profiles/2/saves/
+  cp $rootfs/tmp/storage/hakchi/saves/lang.txt $rootfs/tmp/storage/hakchi/profiles/3/saves/
+else
+  mount /dev/nandc $rootfs/tmp/storage
+  mkdir -p $rootfs/tmp/storage/clover/profiles/1/
+  mkdir -p $rootfs/tmp/storage/clover/profiles/2/
+  mkdir -p $rootfs/tmp/storage/clover/profiles/3/
+  cp $rootfs/tmp/storage/clover/profiles/0/lang.txt $rootfs/tmp/storage/clover/profiles/1/
+  cp $rootfs/tmp/storage/clover/profiles/0/lang.txt $rootfs/tmp/storage/clover/profiles/2/
+  cp $rootfs/tmp/storage/clover/profiles/0/lang.txt $rootfs/tmp/storage/clover/profiles/3/
+fi
+umount $rootfs/tmp/storage
+rmdir $rootfs/tmp/storage
+return 1

@@ -1,0 +1,4 @@
+COMMAND_NAME=Use System Profile
+COMMAND_TYPE=EXTERNAL
+RESTART_UI=TRUE
+COMMAND_STR=sh %script_dir%/setProfileDefault.sh

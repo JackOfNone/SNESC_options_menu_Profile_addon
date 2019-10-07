@@ -1,0 +1,19 @@
+#!/bin/sh
+mkdir $rootfs/tmp/storage
+if [ -e /dev/sda1 ] || [ -e /dev/mmcblk0p1 ]; then
+  if [ -e /dev/sda1 ]; then
+    mount /dev/sda1 $rootfs/tmp/storage
+  elif [ -e /dev/mmcblk0p1 ]; then
+    mount /dev/mmcblk0p1 $rootfs/tmp/storage
+  fi
+  rm -r $rootfs/tmp/storage/hakchi/profiles/
+else
+  mount /dev/nandc $rootfs/tmp/storage
+  rm -r $rootfs/tmp/storage/clover/profiles/1
+  rm -r $rootfs/tmp/storage/clover/profiles/2
+  rm -r $rootfs/tmp/storage/clover/profiles/3
+fi
+umount $rootfs/tmp/storage
+rmdir $rootfs/tmp/storage
+rm -r /etc/options_menu/profile/
+rm /etc/options_menu/commands/c0095_ProfileOptions
